@@ -96,6 +96,9 @@ if($_REQUEST["tablename"] == "") {
 
 	//funcion select
 	echo "function seek(\$" . implode(",\$", $keys) . ") { <br>";
+	foreach ($keys as $key) {
+		echo "\$this->\$$key = $key;<br/>";
+	}
 	echo "\$result = mysql_query(\"select * from $tablename where ($conditionsStr)\");<br>";
 	$i = 0;
 	foreach($params as $param) {

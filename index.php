@@ -99,7 +99,8 @@ if($_REQUEST["tablename"] == "") {
 	foreach ($keys as $key) {
 		echo "\$this->\$$key = $key;<br/>";
 	}
-	echo "\$result = mysql_query(\"select * from $tablename where ($conditionsStr)\");<br>";
+	echo "\$resultQuery = mysql_query(\"select * from $tablename where ($conditionsStr)\");<br>";
+	echo "\$result = mysql_fetch_row(\$resultQuery);<br>";
 	$i = 0;
 	foreach($params as $param) {
 		echo "\$this->\$$param = \$result[$i];<br>";

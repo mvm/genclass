@@ -27,6 +27,7 @@ if($_REQUEST["tablename"] == "") {
 	//generar clase
 	$tablename = $_REQUEST["tablename"];
 ?>
+<h2><?php echo "class_$tablename.php" ?></h2>
 <code>
   &lt;?php
   class <?php echo $_REQUEST["tablename"]; ?> { <br/>
@@ -57,14 +58,14 @@ if($_REQUEST["tablename"] == "") {
 	echo ") {<br>";
 
 	foreach($params as $param) {
-		echo "\$this->\$$param = \$$param;<br>";	
+		echo "\$this->$param = \$$param;<br>";	
 	}
 
 	echo "}<br><br>";
 
 	//funcion insert
 	echo "function insert() { <br>";
-	$values = "\$this->\$" . implode(", \$this->\$", $params);
+	$values = "'\$this->" . implode("', '\$this->", $params) . "'";
 	echo "
 	 return mysql_query(\"insert into $tablename values ($values)\");<br>
 	"; 
@@ -76,13 +77,13 @@ if($_REQUEST["tablename"] == "") {
 	$assigns = array_diff($params, $keys);
 	$assArr = array();
 	foreach($assigns as $assign) {
-		array_push($assArr, "$assign = '\$this->\$$assign'");
+		array_push($assArr, "$assign = '\$this->$assign'");
 	}
 	$assignStr = implode(",", $assArr); 
 
 	$conditions = array();
 	foreach ($keys as $key) {
-		array_push($conditions, "$key = '\$this->\$$key'");
+		array_push($conditions, "$key = '\$this->$key'");
 	}
 	$conditionsStr = implode(" and ", $conditions);
 
@@ -97,13 +98,13 @@ if($_REQUEST["tablename"] == "") {
 	//funcion select
 	echo "function seek(\$" . implode(",\$", $keys) . ") { <br>";
 	foreach ($keys as $key) {
-		echo "\$this->\$$key = $key;<br/>";
+		echo "\$this->$key = $key;<br/>";
 	}
 	echo "\$resultQuery = mysql_query(\"select * from $tablename where ($conditionsStr)\");<br>";
 	echo "\$result = mysql_fetch_row(\$resultQuery);<br>";
 	$i = 0;
 	foreach($params as $param) {
-		echo "\$this->\$$param = \$result[$i];<br>";
+		echo "\$this->$param = \$result[$i];<br>";
 		$i++;
 	}
 	echo "}<br><br>";
@@ -111,6 +112,80 @@ if($_REQUEST["tablename"] == "") {
   } // fin clase<br>
   ?&gt;
 </code>
+
+
+<h2><? echo "$tablename.php"?></h2>
+<code>
+&lt;?php<br>
+include "class_<?php echo "$tablename.php";?>";<br>
+<br>
+
+$host = "<?php echo "$host";?>";<br>
+$user = "<?php echo "$user";?>";<br>
+$password = "<?php echo "$password";?>";<br>
+$dbname = "<?php echo "$dbname";?>";<br>
+$tablename = "<?php echo "$tablename";?>";<br>
+<br>
+
+mysql_connect($host, $user, $password) or die (print "Error conectando a base de datos");<br>
+mysql_select_DB($dbname);<br>
+<br>
+
+echo "&lt;html&gt; &lt;body&gt;";<br>
+
+if($_REQUEST["a"] == "insert_after") {<br>
+	$ob = new <?php echo "$tablename";?>(
+	<?php
+		$obStr = array();
+		foreach($params as $p) {
+			array_push($obStr, "\$_REQUEST[\"$p\"]");
+		}
+		echo implode(",", $obStr);
+	?>
+	);<br>
+	$ob->insert();<br>
+}<br>
+
+
+	echo "&lt;table&gt;"; <br>
+<br>
+	$query = mysql_query("select * from $tablename");<br>
+	while($row = mysql_fetch_row($query)) { <br>
+		echo "&lt;tr&gt;";<br>
+<br>
+		foreach($row as $field) {<br>
+			echo "&lt;td&gt;"; <br>
+			echo "$field";<br>
+			echo "&lt;/td&gt;"; <br>
+		}<br>
+<br>
+		
+		echo "&lt;/tr&gt;";<br>
+	}<br>
+<br>
+	echo "&lt;/table&gt;";<br>
+	echo "&lt;a href=\"<?php echo "$tablename";?>.php?a=insert\"&gt;Insertar&lt;/a&gt;"; <br>
+<br>
+<br>
+<br>
+if($_REQUEST["a"] == "insert") {<br>
+<br>
+	echo "&lt;form action=\"<?php echo "$tablename.php";?>\"&gt;";<br>
+<?php
+	foreach($params as $param) {
+	echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\"/&gt;\";<br>"; 
+	}
+	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"insert_after\\\" name=\\\"a\\\"/&gt\";<br>";
+	echo "echo \"&lt;input type=\\\"submit\\\" value=\\\"Enviar\\\"/&gt\";<br>";
+?>
+	echo "&lt;/form&gt;";<br>
+<br>
+}<br>
+
+echo "&lt;/body&gt;&lt;/html&gt;";<br>
+?&gt;
+</code>
+
 <?php
 }
 ?>

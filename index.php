@@ -41,10 +41,10 @@ if($_REQUEST["tablename"] == "") {
 		echo "var \$$param[0];</br><br/>";
 ?>
       function get<?php echo "$param[0]"; ?>() { <br/>
-	  return $this->$<?php echo "$param[0]";?>; <br/>
+	  return $this-><?php echo "$param[0]";?>; <br/>
       }<br/><br/>
       function set<?php echo "$param[0]"; ?>($value) { <br/>
-      	$this->$<?php echo "$param[0]";?> = $value;<br/>
+      	$this-><?php echo "$param[0]";?> = $value;<br/>
 	}<br/><br/>
 <?php
 		array_push($params, $param[0]);

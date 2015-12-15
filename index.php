@@ -145,20 +145,49 @@ if($_REQUEST["a"] == "insert_after") {<br>
 	);<br>
 	$ob->insert();<br>
 }<br>
-
+<br>
+if($_REQUEST["a"] == "delete") {<br>
+	$ob = new <?php echo "$tablename";?>(
+	<?php
+		$obStr = array();
+		foreach($params as $p) {
+			array_push($obStr, "\$_REQUEST[\"$p\"]");
+		}
+		echo implode(",", $obStr);
+	?>);<br>
+	$ob->delete();<br>
+}<br>
 
 	echo "&lt;table&gt;"; <br>
 <br>
 	$query = mysql_query("select * from $tablename");<br>
 	while($row = mysql_fetch_row($query)) { <br>
 		echo "&lt;tr&gt;";<br>
+		$row_data = array();<br>
 <br>
-		foreach($row as $field) {<br>
+		$i = 0;<br>
+		$params = array( <?php echo "\"" . implode("\",\"", $params) . "\""; ?> );<br>
+		$keys = array( <?php echo "\"" . implode("\",\"", $keys) . "\""; ?> );<br>
+		foreach($params as $p) {<br>
+			$row_data[$p] = $row[$i];<br>
+			$i++;<br>
+			<br>
 			echo "&lt;td&gt;"; <br>
-			echo "$field";<br>
+			echo "$row_data[$p]";<br>
 			echo "&lt;/td&gt;"; <br>
 		}<br>
 <br>
+		echo "&lt;td&gt;";<br>
+		<?php
+		$deleteArray = array();
+		$deleteHref = "$tablename.php?a=delete&";
+		foreach($keys as $key) {
+			array_push($deleteArray, "$key=\$row_data[$key]");
+		}
+		$deleteHref .= implode("&", $deleteArray);
+		?>
+		echo "&lt;a href=\"<?php echo $deleteHref; ?>\"&gt;X&lt;/a&gt;";<br> 
+		echo "&lt;/gt&gt;";<br>
 		
 		echo "&lt;/tr&gt;";<br>
 	}<br>
@@ -189,4 +218,3 @@ echo "&lt;/body&gt;&lt;/html&gt;";<br>
 <?php
 }
 ?>
-

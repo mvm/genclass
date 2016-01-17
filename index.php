@@ -108,6 +108,17 @@ if($_REQUEST["tablename"] == "") {
 		$i++;
 	}
 	echo "}<br><br>";
+	
+	//funcion select
+	echo "function select(\$" . implode(", \$", $params) . ") {<br>";
+	$likeStrArr = array();
+	foreach ($params as $p) {
+		array_push($likeStrArr, "$p like '\$$p'");
+	}
+	$likeStr = implode(" and ", $likeStrArr);
+	echo "return mysql_query(\"select * from $tablename where ($likeStr)\");<br>";
+	echo "}<br><br>";
+
 ?>
   } // fin clase<br>
   ?&gt;

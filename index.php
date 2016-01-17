@@ -168,6 +168,15 @@ if($_REQUEST["a"] == "delete") {<br>
 	?>);<br>
 	$ob->delete();<br>
 }<br>
+<br>
+if($_REQUEST["a"] == "update_after") {<br>
+	$ob = new <?php echo "$tablename";?>(
+	<?php
+		echo implode(",", $obStr);
+	?>);<br>
+	$ob->update();<br>
+}<br>
+<br>
 
 	echo "&lt;table&gt;"; <br>
 <br>
@@ -196,8 +205,15 @@ if($_REQUEST["a"] == "delete") {<br>
 			array_push($deleteArray, "$key=\$row_data[$key]");
 		}
 		$deleteHref .= implode("&", $deleteArray);
+
+		$updateArray = array();
+		foreach($params as $p) {
+			array_push($updateArray, "$p=\$row_data[$p]");
+		}
+		$updateHref = "$tablename.php?a=update&" . implode("&", $updateArray);
 		?>
-		echo "&lt;a href=\"<?php echo $deleteHref; ?>\"&gt;X&lt;/a&gt;";<br> 
+		echo "&lt;a href=\"<?php echo $deleteHref; ?>\"&gt;X&lt;/a&gt;";<br>
+		echo "&lt;a href=\"<?php echo $updateHref; ?>\"&gt;U&lt;/a&gt;";<br>
 		echo "&lt;/gt&gt;";<br>
 		
 		echo "&lt;/tr&gt;";<br>
@@ -221,6 +237,19 @@ if($_REQUEST["a"] == "insert") {<br>
 	echo "&lt;/form&gt;";<br>
 <br>
 }<br>
+<br>
+if($_REQUEST["a"] == "update") {<br>
+	echo "&lt;form action=\"<?php echo "$tablename.php";?>\"&gt;";<br>
+<?php
+	foreach($params as $param) {
+		echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\" value=\\\"\$_REQUEST[\"$param\"]\\\"/&gt;\";<br>"; 
+	}
+	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"insert_after\\\" name=\\\"a\\\"/&gt\";<br>";
+	echo "echo \"&lt;input type=\\\"submit\\\" value=\\\"Enviar\\\"/&gt\";<br>";
+?>
+	echo "&lt;/form&gt;";<br>
+}<br>
+<br>
 
 echo "&lt;/body&gt;&lt;/html&gt;";<br>
 ?&gt;

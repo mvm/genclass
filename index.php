@@ -69,7 +69,7 @@ if($_REQUEST["tablename"] == "") {
 	echo "function insert() { <br>";
 	$values = "'\$this->" . implode("', '\$this->", $params) . "'";
 	echo "
-	 return mysql_query(\"insert into $tablename values ($values)\");<br>
+	 return mysql_query(\"insert into $tablename values ($values)\") or (print mysql_error());<br>
 	"; 
 	echo "}<br><br>";
 

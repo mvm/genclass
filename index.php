@@ -238,10 +238,10 @@ if($_REQUEST["a"] == "insert") {<br>
 	echo "&lt;form action=\"<?php echo "$tablename.php";?>\"&gt;";<br>
 <?php
 	foreach($params as $param) {
-	echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\"/&gt;\";<br>"; 
+	echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\" class=\\\"input\\\" /&gt;\";<br>"; 
 	}
 	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"insert_after\\\" name=\\\"a\\\"/&gt\";<br>";
-	echo "echo \"&lt;input type=\\\"submit\\\" value=\\\"Enviar\\\"/&gt\";<br>";
+	echo "echo \"&lt;input type=\\\"submit\\\"  class=\\\"submit_button\\\"  value=\\\"Enviar\\\"/&gt\";<br>";
 ?>
 	echo "&lt;/form&gt;";<br>
 <br>

@@ -248,7 +248,7 @@ if($_REQUEST["a"] == "update") {<br>
 	foreach($params as $param) {
 		echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\" value=\\\"\$_REQUEST[$param]\\\"/&gt;\";<br>"; 
 	}
-	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"insert_after\\\" name=\\\"a\\\"/&gt\";<br>";
+	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"update_after\\\" name=\\\"a\\\"/&gt\";<br>";
 	echo "echo \"&lt;input type=\\\"submit\\\" value=\\\"Enviar\\\"/&gt\";<br>";
 ?>
 	echo "&lt;/form&gt;";<br>

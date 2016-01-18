@@ -7,6 +7,8 @@ $dbname = "genclass";
 mysql_connect($host, $user, $password) or die (print "Error conectando a base de datos");
 mysql_select_DB($dbname);
 
+if(!isset($_REQUEST["tablename"])) $_REQUEST["tablename"] = "";
+
 if($_REQUEST["tablename"] == "") {
 	?>
 	<h1>Generador de clases</h1>
@@ -144,6 +146,7 @@ mysql_select_DB($dbname);<br>
 <br>
 
 echo "&lt;html&gt; &lt;body&gt;";<br>
+if(!isset($_REQUEST["a"])) $_REQUEST["a"] = "";<br>
 
 if($_REQUEST["a"] == "insert_after") {<br>
 	$ob = new <?php echo "$tablename";?>(
@@ -243,7 +246,7 @@ if($_REQUEST["a"] == "update") {<br>
 	echo "&lt;form action=\"<?php echo "$tablename.php";?>\"&gt;";<br>
 <?php
 	foreach($params as $param) {
-		echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\" value=\\\"\$_REQUEST[\"$param\"]\\\"/&gt;\";<br>"; 
+		echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\" value=\\\"\$_REQUEST[$param]\\\"/&gt;\";<br>"; 
 	}
 	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"insert_after\\\" name=\\\"a\\\"/&gt\";<br>";
 	echo "echo \"&lt;input type=\\\"submit\\\" value=\\\"Enviar\\\"/&gt\";<br>";

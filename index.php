@@ -171,7 +171,7 @@ if($_REQUEST["a"] == "delete") {<br>
 	<?php
 		$obStr = array();
 		foreach($params as $p) {
-			array_push($obStr, "\$_REQUEST[\"$p\"]");
+			array_push($obStr, "isset(\$_REQUEST[\"$p\"])? \$_REQUEST[\"$p\"] : \"\"");
 		}
 		echo implode(",", $obStr);
 	?>);<br>

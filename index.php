@@ -191,7 +191,7 @@ if($_REQUEST["a"] == "update_after") {<br>
 <br>
 	$query = mysql_query("select * from $tablename");<br>
 	while($row = mysql_fetch_row($query)) { <br>
-		echo "&lt;tr&gt;";<br>
+		echo "&lt;tr class=\\\"list\\\" &gt;";<br>
 		$row_data = array();<br>
 <br>
 		$i = 0;<br>
@@ -221,8 +221,8 @@ if($_REQUEST["a"] == "update_after") {<br>
 		}
 		$updateHref = "$tablename.php?a=update&" . implode("&", $updateArray);
 		?>
-		echo "&lt;a href=\"<?php echo $deleteHref; ?>\"&gt;X&lt;/a&gt;";<br>
-		echo "&lt;a href=\"<?php echo $updateHref; ?>\"&gt;U&lt;/a&gt;";<br>
+		echo "&lt;a class=\\\"delete_button\\\" href=\"<?php echo $deleteHref; ?>\"&gt;X&lt;/a&gt;";<br>
+		echo "&lt;a class=\\\"update_button\\\" href=\"<?php echo $updateHref; ?>\"&gt;U&lt;/a&gt;";<br>
 		echo "&lt;/gt&gt;";<br>
 		
 		echo "&lt;/tr&gt;";<br>
@@ -267,6 +267,18 @@ echo "&lt;/body&gt;&lt;/html&gt;";<br>
 <h2>style.css</h2>
 
 <pre>
+.list {
+	//Define here
+}
+
+.delete_button {
+	//Define here
+}
+
+.update_button {
+	//Define_here
+}
+
 .input {
 	//Define here
 }

@@ -145,7 +145,12 @@ mysql_connect($host, $user, $password) or die (print "Error conectando a base de
 mysql_select_DB($dbname);<br>
 <br>
 
-echo "&lt;html&gt; &lt;body&gt;";<br>
+echo "&lt;html&gt;";<br>
+echo "&lt;head&gt;";<br>
+echo "&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\"&gt;";<br>
+echo "&lt;/head&gt;";<br>
+echo "&lt;body&gt;";<br>
+<br>
 if(!isset($_REQUEST["a"])) $_REQUEST["a"] = "";<br>
 
 if($_REQUEST["a"] == "insert_after") {<br>
@@ -246,10 +251,10 @@ if($_REQUEST["a"] == "update") {<br>
 	echo "&lt;form action=\"<?php echo "$tablename.php";?>\"&gt;";<br>
 <?php
 	foreach($params as $param) {
-		echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" name=\\\"$param\\\" value=\\\"\$_REQUEST[$param]\\\"/&gt;\";<br>"; 
+		echo "echo \"&lt;br&gt;$param : &lt;input type=\\\"text\\\" class=\\\"input\\\" name=\\\"$param\\\" value=\\\"\$_REQUEST[$param]\\\"/&gt;\";<br>"; 
 	}
 	echo "echo \"&lt;input type=\\\"hidden\\\" value=\\\"update_after\\\" name=\\\"a\\\"/&gt\";<br>";
-	echo "echo \"&lt;input type=\\\"submit\\\" value=\\\"Enviar\\\"/&gt\";<br>";
+	echo "echo \"&lt;input type=\\\"submit\\\" class=\\\"submit_button\\\" value=\\\"Enviar\\\"/&gt\";<br>";
 ?>
 	echo "&lt;/form&gt;";<br>
 }<br>
@@ -258,6 +263,18 @@ if($_REQUEST["a"] == "update") {<br>
 echo "&lt;/body&gt;&lt;/html&gt;";<br>
 ?&gt;
 </code>
+
+<h2>style.css</h2>
+
+<pre>
+.input {
+	//Define here
+}
+
+.submit_button {
+	//Define here
+}
+</pre>
 
 <?php
 }

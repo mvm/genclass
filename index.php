@@ -1,4 +1,7 @@
 <?php
+/*
+ * EDIT THIS BELOW WITH YOUR DB PARAMETERS
+*/
 $host = "localhost";
 $user = "root";
 $password = "root";

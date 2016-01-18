@@ -95,7 +95,8 @@ if($_REQUEST["tablename"] == "") {
 	echo "return mysql_query(\"delete from $tablename where ($conditionsStr)\");<br>";
 	echo "}<br><br>";
 
-	//funcion select
+	// Función seek
+	// Encontrar tabla buscando por igualdad en claves.
 	echo "function seek(\$" . implode(",\$", $keys) . ") { <br>";
 	foreach ($keys as $key) {
 		echo "\$this->$key = $key;<br/>";
